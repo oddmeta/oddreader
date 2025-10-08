@@ -408,7 +408,8 @@ function addTextClickListeners() {
 }
 
 function findFirstTextElement(container) {
-    const elements = container.querySelectorAll('p, h1, h2, h3, h4, h5, h6, div, span');
+    // const elements = container.querySelectorAll('p, h1, h2, h3, h4, h5, h6, div, span');
+    const elements = container.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span');
     
     for (let i = 0; i < elements.length; i++) {
         const text = elements[i].textContent.trim();
@@ -464,7 +465,10 @@ function playText(elementId) {
     if (element) {
         // 获取元素的xml:lang属性
         lang = element.getAttribute('xml:lang');
-        if (lang) {
+        if (!lang) {
+            lang = 'en-US';
+            console.log(`Language not found, defaulting to: ${lang}`);
+        } else {
             console.log(`Found language attribute: ${lang} for element ${elementId}`);
         }
         
@@ -560,36 +564,32 @@ function scrollToElement(element, isInIframe) {
 function isElementInViewport(element) {
     if (!element) return false;
     
-    // 获取元素的位置信息
     const rect = element.getBoundingClientRect();
     
-    // 获取视口的尺寸
-    const viewport = {
-        width: window.innerWidth || document.documentElement.clientWidth,
-        height: window.innerHeight || document.documentElement.clientHeight
-    };
+    // 更严格的判断：要求元素至少80%在视口内
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
     
-    // 检查元素是否在视口内
-    // 这个实现会检查元素是否至少有10%的内容可见，同时确保元素的中心点在视口内
-    // 这样可以避免完全不可见的元素被错误地判定为可见
+    // 计算元素在视口内的部分
+    const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+    const visibleWidth = Math.min(rect.right, viewportWidth) - Math.max(rect.left, 0);
+    
+    // 计算可见比例
+    const visibleHeightRatio = visibleHeight / rect.height;
+    const visibleWidthRatio = visibleWidth / rect.width;
+    
     const isVisible = (
-        // 元素的顶部不超过视口底部
-        rect.top < viewport.height &&
-        // 元素的底部不低于视口顶部
-        rect.bottom > 0 &&
-        // 元素的左侧不超过视口右侧
-        rect.left < viewport.width &&
-        // 元素的右侧不低于视口左侧
-        rect.right > 0 &&
-        // 元素的中心点在视口内
-        (rect.top + rect.height / 2 > 0 && rect.top + rect.height / 2 < viewport.height) &&
-        (rect.left + rect.width / 2 > 0 && rect.left + rect.width / 2 < viewport.width)
+        visibleHeightRatio >= 0.8 &&  // 至少80%高度可见
+        visibleWidthRatio >= 0.8 &&   // 至少80%宽度可见
+        rect.top < viewportHeight &&  // 元素顶部在视口内
+        rect.bottom > 0 &&            // 元素底部在视口内
+        rect.left < viewportWidth &&  // 元素左侧在视口内
+        rect.right > 0                // 元素右侧在视口内
     );
     
-    // 可以添加更多的调试信息来帮助定位问题
     console.log(`Element ${element.id} visibility check:`);
-    console.log(`- Position: top=${rect.top}, bottom=${rect.bottom}, left=${rect.left}, right=${rect.right}`);
-    console.log(`- Viewport: width=${viewport.width}, height=${viewport.height}`);
+    console.log(`- Visible height ratio: ${visibleHeightRatio.toFixed(2)}`);
+    console.log(`- Visible width ratio: ${visibleWidthRatio.toFixed(2)}`);
     console.log(`- Is visible: ${isVisible}`);
     
     return isVisible;
@@ -701,7 +701,7 @@ function findNextElementWithText(currentId, isInIframe) {
 }
 
 // 修改speak函数，在onstart事件中添加高亮，在onend事件中移除高亮
-function speak(data, elementId) {
+function speak(data, elementId, lang) {
     if (synth.speaking || synth.paused) {
         console.error('Speech synthesis is already in use');
         return;
@@ -780,11 +780,11 @@ function speak(data, elementId) {
     
     // 尝试使用中文语音（如果可用）
     if (voices.length > 0) {
-        const chineseVoice = voices.find(voice => 
-            voice.lang.includes('zh-CN') || voice.lang.includes('zh')
+        const speakVoice = voices.find(voice => 
+            voice.lang.includes(lang) || voice.lang.includes('zh-CN')
         );
-        if (chineseVoice) {
-            utterThis.voice = chineseVoice;
+        if (speakVoice) {
+            utterThis.voice = speakVoice;
         }
     }
     
@@ -886,7 +886,8 @@ function findFirstTextElementWithContent() {
     const viewer = document.getElementById('viewer');
     
     // 先检查直接内容（放宽条件）
-    let elements = viewer.querySelectorAll('p, h1, h2, h3, h4, h5, h6, div, span');
+    // let elements = viewer.querySelectorAll('p, h1, h2, h3, h4, h5, h6, div, span');
+    let elements = viewer.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span');
     
     for (let i = 0; i < elements.length; i++) {
         const text = elements[i].textContent.trim();
@@ -902,7 +903,8 @@ function findFirstTextElementWithContent() {
         try {
             const iframeDoc = iframes[i].contentDocument || iframes[i].contentWindow.document;
             if (iframeDoc) {
-                elements = iframeDoc.querySelectorAll('p, h1, h2, h3, h4, h5, h6, div, span');
+                // elements = iframeDoc.querySelectorAll('p, h1, h2, h3, h4, h5, h6, div, span');
+                elements = iframeDoc.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span');
                 
                 for (let j = 0; j < elements.length; j++) {
                     const text = elements[j].textContent.trim();
@@ -1191,6 +1193,9 @@ function init() {
     
     // 绑定事件监听器
     bindEventListeners();
+
+    // 初始化阅读模式
+    initReadingMode();
 }
 
 // 页面加载完成后初始化

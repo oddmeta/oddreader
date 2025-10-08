@@ -1,75 +1,387 @@
-body {
+/* static/css/styles.css */
+
+/* 基础重置和变量 */
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --accent-color: #4895ef;
+  --success-color: #4cc9f0;
+  --background-color: #f8f9fa;
+  --text-color: #333;
+  --light-text: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+  --transition: all 0.3s ease;
+}
+
+* {
   margin: 0;
-  background: #fafafa;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #333;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  min-height: 800px;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.container {
-  width: 80%;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* 应用容器 */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 头部 */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  max-width: 1200px; /* 与 main-content 保持一致 */
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  /* 添加以下属性确保居中 */
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.controls {
-  margin-bottom: 20px;
+/* 主内容区 */
+.main-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  width: 100%;
 }
 
-.audio-settings {
-  margin-top: 10px;
-}
-
-.audio-settings label {
-  margin-right: 5px;
-}
-
-.audio-settings input[type="range"] {
-  margin-right: 10px;
-  width: 100px;
-}
-
-.book-controls {
-  margin-bottom: 20px;
-}
-
-#toc {
-  width: 300px;
-  margin-right: 10px;
+/* 阅读器区域 */
+.reader-section {
+  flex: 1;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  min-height: 400px;
 }
 
 .viewer {
+  height: 100%;
   width: 100%;
-  height: 600px;
-  box-shadow: 0 0 4px #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  background: white;
+  padding: 1rem;
   overflow-y: auto;
 }
 
-button {
-  padding: 5px 10px;
-  margin-right: 5px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+/* 控制面板 */
+.control-panel {
+  /* width: 300px; 
+  position: fixed; */
+  top: 0;
+  right: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  z-index: 1000;  
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+}
+
+/* 书籍控制 */
+.book-controls {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.control-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.control-select {
+  flex: 1;
+  min-width: 150px;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: white;
+}
+
+.navigation-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.nav-btn:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+/* 音频控制 */
+.audio-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.playback-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.control-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--accent-color);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  font-size: 1rem;
+}
+
+.control-btn:hover {
+  transform: scale(1.1);
+}
+
+.play-btn {
+  background-color: #4ade80;
+}
+
+.pause-btn {
+  background-color: #fbbf24;
+}
+
+.stop-btn {
+  background-color: #f87171;
+}
+
+/* 音频设置 */
+.audio-settings {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.setting-group {
+  flex: 1;
+  min-width: 120px;
+}
+
+.setting-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--light-text);
+}
+
+.setting-slider {
+  width: 100%;
+  height: 6px;
   border-radius: 3px;
+  background: var(--border-color);
+  outline: none;
+  /* -webkit-appearance: none; */
+}
+
+.setting-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-color);
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #e0e0e0;
-}
-
-/* 文本段落样式 - 使其可点击 */
-.viewer p {
+.setting-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-color);
   cursor: pointer;
-  padding: 5px 0;
+  border: none;
 }
 
-.viewer p:hover {
-  background-color: #f5f5f5;
+.settings-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.settings-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 响应式设计 */
+@media (min-width: 768px) {
+  .main-content {
+    flex-direction: row;
+  }
+  
+  .reader-section {
+    flex: 3;
+    min-height: 500px;
+  }
+  
+  .control-panel {
+    flex: 1;
+    max-width: 300px;
+  }
+  
+  .app-title {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main-content {
+    padding: 2rem;
+  }
+  
+  .control-group {
+    flex-direction: column;
+  }
+  
+  .control-select {
+    min-width: auto;
+  }
+  
+  .audio-controls {
+    flex-direction: column;
+  }
+  
+  .audio-settings {
+    flex-direction: column;
+  }
+}
+
+/* 移动端优化 */
+@media (max-width: 767px) {
+  .control-group {
+    flex-direction: column;
+  }
+  
+  .navigation-controls {
+    width: 100%;
+  }
+  
+  .nav-btn {
+    flex: 1;
+  }
+  
+  .audio-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .setting-group {
+    min-width: auto;
+  }
+  
+  .viewer {
+    min-height: 300px;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --light-text: #a0a0a0;
+    --border-color: #333;
+  }
+  
+  .reader-section,
+  .control-panel {
+    background-color: #1e1e1e;
+    color: var(--text-color);
+  }
+  
+  .control-select {
+    background-color: #2d2d2d;
+    color: var(--text-color);
+    border-color: #444;
+  }
+}
+
+
+/* 正常模式（默认） */
+.reader-section.normal-mode .viewer {
+  background-color: white;
+  color: #333;
+}
+
+/* 护眼模式 */
+.reader-section.eye-care .viewer {
+  background-color: #f0f8e0;
+  color: #333;
+}
+
+.reader-section.eye-care .viewer p,
+.reader-section.eye-care .viewer h1,
+.reader-section.eye-care .viewer h2,
+.reader-section.eye-care .viewer h3,
+.reader-section.eye-care .viewer h4,
+.reader-section.eye-care .viewer h5,
+.reader-section.eye-care .viewer h6 {
+  color: #2c5530;
+}
+
+/* 确保在深色模式下阅读器模式仍然有效 */
+@media (prefers-color-scheme: dark) {
+  .reader-section.normal-mode .viewer {
+    background-color: white;
+    color: #333;
+  }
+  
+  .reader-section.normal-mode .viewer p,
+  .reader-section.normal-mode .viewer h1,
+  .reader-section.normal-mode .viewer h2,
+  .reader-section.normal-mode .viewer h3,
+  .reader-section.normal-mode .viewer h4,
+  .reader-section.normal-mode .viewer h5,
+  .reader-section.normal-mode .viewer h6 {
+    color: #333;
+  }
 }
