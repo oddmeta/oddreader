@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  background: #fafafa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  min-height: 800px;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.controls {
+  margin-bottom: 20px;
+}
+
+.audio-settings {
+  margin-top: 10px;
+}
+
+.audio-settings label {
+  margin-right: 5px;
+}
+
+.audio-settings input[type="range"] {
+  margin-right: 10px;
+  width: 100px;
+}
+
+.book-controls {
+  margin-bottom: 20px;
+}
+
+#toc {
+  width: 300px;
+  margin-right: 10px;
+}
+
+.viewer {
+  width: 100%;
+  height: 600px;
+  box-shadow: 0 0 4px #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  background: white;
+  overflow-y: auto;
+}
+
+button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}
+
+/* 文本段落样式 - 使其可点击 */
+.viewer p {
+  cursor: pointer;
+  padding: 5px 0;
+}
+
+.viewer p:hover {
+  background-color: #f5f5f5;
+}
