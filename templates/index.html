@@ -8,67 +8,84 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js"></script>
-  <!-- 将epub.js移到app.js之前 -->
+
   <script src="{{ url_for('static', filename='dist/epub.js') }}"></script>
 </head>
 <body>
   <div class="app-container">
-    <!-- <header class="app-header">
-      <h1 class="app-title">Odd EPUB Reader</h1>
-    </header> -->
     
     <main class="main-content">
-      <!-- <div class="content-wrapper"> -->
+
+      <div class="main-content-wrapper">
 
         <div class="reader-section">
           <div id="viewer" class="viewer"></div>
         </div>
+        <!--/reader-section -->
         
-        <div class="control-panel">
-          <div class="book-controls">
-            <div class="control-group">
-              <select id="books" class="control-select"></select>
-              <select id="toc" class="control-select"></select>
-              <select id="reading-mode" class="control-select">
-                <option value="normal">正常模式</option>
-                <option value="eye-care">护眼模式</option>
-              </select>            
-            </div>
-            
-            <div class="navigation-controls">
-              <button id="prev-btn" class="nav-btn">
-                <span>❮</span> Prev
-              </button>
-              <button id="next-btn" class="nav-btn">
-                Next <span>❯</span>
-              </button>
-            </div>
+        <div class="control-panel-wrapper">
+          <div class="control-panel-toggle" id="control-panel-toggle">
+            <span id="toggle-icon">✕</span>
           </div>
-          
-          <div class="audio-controls">
-            <div class="playback-controls">
-              <button id="play-btn" class="control-btn play-btn">▶</button>
-              <button id="pause-btn" class="control-btn pause-btn">⏸</button>
-              <button id="stop-btn" class="control-btn stop-btn">⏹</button>
+
+          <div class="control-panel" id="control-panel">
+            <div class="panel-header">
+              <h3>OddReader控制台</h3>
+              <button class="close-panel-btn" id="close-panel-btn">×</button>
             </div>
             
-            <div class="audio-settings">
-              <div class="setting-group">
-                <label for="rate" class="setting-label">Rate: <span class="rate-value">1</span></label>
-                <input type="range" min="0.5" max="2" value="1" step="0.1" id="rate" class="setting-slider">
+            <div class="book-controls">
+              <div class="control-group">
+                <select id="books" class="control-select"></select>
+                <select id="toc" class="control-select"></select>
+                <select id="reading-mode" class="control-select">
+                  <option value="normal">正常模式</option>
+                  <option value="eye-care">护眼模式</option>
+                  <option value="high-contrast">高对比度</option>
+                  <option value="dark">暗黑模式</option>
+                </select>            
               </div>
               
-              <div class="setting-group">
-                <label for="pitch" class="setting-label">Pitch: <span class="pitch-value">1</span></label>
-                <input type="range" min="0" max="2" value="1" step="0.1" id="pitch" class="setting-slider">
+              <div class="navigation-controls">
+                <button id="prev-btn" class="nav-btn">
+                  <span>❮</span> Prev
+                </button>
+                <button id="next-btn" class="nav-btn">
+                  Next <span>❯</span>
+                </button>
               </div>
             </div>
+            <!-- /book-controls -->
             
-            <button id="settings-btn" class="settings-toggle">⚙️ Settings</button>
+            <div class="audio-controls">
+              <div class="playback-controls">
+                <button id="play-btn" class="control-btn play-btn">▶</button>
+                <button id="pause-btn" class="control-btn pause-btn">⏸</button>
+                <button id="stop-btn" class="control-btn stop-btn">⏹</button>
+              </div>
+              
+              <div class="audio-settings">
+                <div class="setting-group">
+                  <label for="rate" class="setting-label">Rate: <span class="rate-value">1</span></label>
+                  <input type="range" min="0.5" max="2" value="1" step="0.1" id="rate" class="setting-slider">
+                </div>
+                
+                <div class="setting-group">
+                  <label for="pitch" class="setting-label">Pitch: <span class="pitch-value">1</span></label>
+                  <input type="range" min="0" max="2" value="1" step="0.1" id="pitch" class="setting-slider">
+                </div>
+              </div>
+              
+              <button id="settings-btn" class="settings-toggle">⚙️ Settings</button>
+            </div>
+            <!-- /audio-controls -->
           </div>
+          <!-- /control-panel -->
         </div>
+        <!-- /control-panel-wrapper -->        
   
-      <!-- </div> -->
+      </div>
+      <!-- /main-content-wrapper -->
 
     </main>
   </div>

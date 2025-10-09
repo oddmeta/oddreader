@@ -35,94 +35,187 @@ body {
   min-height: 100vh;
 }
 
-/* 头部 */
-.app-header {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  max-width: 1200px; /* 与 main-content 保持一致 */
-  color: white;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: var(--shadow);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  /* 添加以下属性确保居中 */
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  box-sizing: border-box;
-}
-
 /* 主内容区 */
 .main-content {
   display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 1rem;
-  gap: 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-
+  justify-content: center;
   width: 100%;
+}
+
+.main-content-wrapper {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  min-height: calc(100vh - 60px); /* 根据实际需要调整 */
 }
 
 /* 阅读器区域 */
 .reader-section {
   flex: 1;
-  background: white;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  min-height: 400px;
+  min-width: 0;
 }
 
-.viewer {
-  height: 100%;
+.reader-section .viewer {
   width: 100%;
-  padding: 1rem;
-  overflow-y: auto;
+  height: 100%;
 }
 
-/* 控制面板 */
-.control-panel {
-  /* width: 300px; 
-  position: fixed; */
-  top: 0;
+
+
+
+
+
+
+
+
+
+
+.control-panel-wrapper {
+  position: relative;
+}
+
+.control-panel-toggle {
+  position: fixed;
+  top: 50%;
   right: 0;
-  height: 100vh;
-  overflow-y: auto;
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-  z-index: 1000;  
-  background: white;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  padding: 1rem;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 60px;
+  background: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px 0 0 8px;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+  z-index: 1001;
+  transition: all 0.3s ease;
 }
 
-/* 书籍控制 */
+.control-panel-toggle:hover {
+  background: #0056b3;
+}
+
+/* 控制面板默认显示样式 */
+.control-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 300px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 1000;
+  padding: 20px;
+  transition: all 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 隐藏状态 */
+.control-panel.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-panel-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-panel-btn:hover {
+  color: #333;
+}
+
+/* 阅读模式样式 */
+.reader-section.normal-mode {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.reader-section.eye-care-mode {
+  background-color: #f0f8e0;
+  color: #333333;
+}
+
+.reader-section.high-contrast-mode {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.reader-section.dark-mode {
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 其他现有样式保持不变 */
 .book-controls {
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
 }
 
 .control-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .control-select {
-  flex: 1;
-  min-width: 150px;
-  padding: 0.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
+  width: 100%;
+  max-width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   background-color: white;
+  font-size: 14px;
+  box-sizing: border-box;
 }
+
+
+
+
+
 
 .navigation-controls {
   display: flex;
@@ -323,7 +416,7 @@ body {
   }
 }
 
-/* 深色模式支持 */
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: #121212;
@@ -345,14 +438,11 @@ body {
   }
 }
 
-
-/* 正常模式（默认） */
 .reader-section.normal-mode .viewer {
   background-color: white;
   color: #333;
 }
 
-/* 护眼模式 */
 .reader-section.eye-care .viewer {
   background-color: #f0f8e0;
   color: #333;
@@ -368,7 +458,6 @@ body {
   color: #2c5530;
 }
 
-/* 确保在深色模式下阅读器模式仍然有效 */
 @media (prefers-color-scheme: dark) {
   .reader-section.normal-mode .viewer {
     background-color: white;
@@ -385,3 +474,4 @@ body {
     color: #333;
   }
 }
+*/

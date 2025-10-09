@@ -1196,6 +1196,10 @@ function init() {
 
     // 初始化阅读模式
     initReadingMode();
+    
+    // 初始化控制面板
+    initControlPanel();
+
 }
 
 // 页面加载完成后初始化
